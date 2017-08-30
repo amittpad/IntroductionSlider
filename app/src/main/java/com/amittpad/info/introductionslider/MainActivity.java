@@ -26,10 +26,20 @@ public class MainActivity extends AbstractProjectBaseActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
 
+    private PrefManager prefManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Checking for first time launch - before calling setContentView()
+        prefManager = new PrefManager(this);
+
+        if (!prefManager.IsFirstTimeLaunch()) {
+            prefManager.setFirstTimeLaunch(false);
+            startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_main);
 
         btnSkip = (Button) findViewById(R.id.button_skip);
@@ -40,7 +50,6 @@ public class MainActivity extends AbstractProjectBaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -72,7 +81,6 @@ public class MainActivity extends AbstractProjectBaseActivity {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
                     });
@@ -94,7 +102,21 @@ public class MainActivity extends AbstractProjectBaseActivity {
                             btnNext.setBackground(getResources().getDrawable(R.drawable.button_border_gray));
                         }*/
 
-
+                    btnNext.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // checking for last page
+                            // if last page home screen will be launched
+                            int current = getItem(+1);
+                            if (current < images.length) {
+                                // move to next screen
+                                viewPager.setCurrentItem(current);
+                            } else {
+                                prefManager.setFirstTimeLaunch(false);
+                                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                                finish();                            }
+                        }
+                    });
                 }
             }
 
@@ -122,6 +144,10 @@ public class MainActivity extends AbstractProjectBaseActivity {
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(colorsActive[currentPage]);
+    }
+
+    private int getItem(int i) {
+        return viewPager.getCurrentItem() + i;
     }
 
 

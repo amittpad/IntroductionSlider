@@ -12,5 +12,6 @@
         android:layout_height="wrap_content"
         android:text="Hello World!, India is the best country"
         android:layout_gravity="center"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"/>
 </LinearLayout>
