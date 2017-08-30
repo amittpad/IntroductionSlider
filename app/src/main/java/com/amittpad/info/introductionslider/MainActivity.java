@@ -59,26 +59,42 @@ public class MainActivity extends AbstractProjectBaseActivity {
                 addBottomDots(position);
                 if (position == 2){
                     btnNext.setText("GET STARTED");
-                    btnNext.setTextColor(getResources().getColor(R.color.colorPrimary));
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        btnNext.setBackground(getResources().getDrawable(R.drawable.button_border, null));
-//                    }else {
-//                        btnNext.setBackground(getResources().getDrawable(R.drawable.button_border));
-//                    }
+                    btnSkip.setVisibility(View.INVISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                       // btnNext.setBackground(getResources().getDrawable(R.drawable.button_border, null));
+                        btnNext.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    }else {
+                        //btnNext.setBackground(getResources().getDrawable(R.drawable.button_border));
+                        btnNext.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    btnNext.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    });
 
                 }else {
-                    btnSkip.setText("SKIP");
-                    btnSkip.setTextColor(Color.BLACK);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                            btnSkip.setTextColor(getResources().getColor(R.color.colorText, null));
-//                        }else {
-//                            btnSkip.setTextColor(getResources().getColor(R.color.colorText));
-//                        }
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                            btnSkip.setBackground(getResources().getDrawable(R.drawable.button_border_gray, null));
-//                        }else {
-//                            btnSkip.setBackground(getResources().getDrawable(R.drawable.button_border_gray));
-//                        }
+                    btnNext.setText("NEXT");
+                    btnSkip.setVisibility(View.VISIBLE);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                           // btnNext.setTextColor(getResources().getColor(R.color.colorText, null));
+                            btnNext.setTextColor(Color.BLACK);
+                        }else {
+                            //btnNext.setTextColor(getResources().getColor(R.color.colorText));
+                            btnNext.setTextColor(Color.BLACK);
+                        }
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            btnNext.setBackground(getResources().getDrawable(R.drawable.button_border_gray, null));
+                        }else {
+                            btnNext.setBackground(getResources().getDrawable(R.drawable.button_border_gray));
+                        }*/
+
+
                 }
             }
 
